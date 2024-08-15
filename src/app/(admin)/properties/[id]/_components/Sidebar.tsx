@@ -23,6 +23,18 @@ const Sidebar = ({ propertyId }: SidebarProps) => {
       path: `/properties/${propertyId}/create-reservation`,
     },
     {
+      label: "Rooms",
+      path: `/properties/${propertyId}/rooms`,
+    },
+    {
+      label: "Guest Movement",
+      path: `/properties/${propertyId}/guest-movement`,
+    },
+    {
+      label: "Guest List",
+      path: `/properties/${propertyId}/guest-list`,
+    },
+    {
       label: "Properties",
       path: `/select-property`,
     },

@@ -5,6 +5,13 @@ export const BOOKING_LICENSE_STATUS = {
   CANCELLED: "CANCELLED",
 };
 
+export const BOOKING_LICENSE_STATUS_TO_STATUS: any = {
+  NOT_STARTED: "Not Checked In",
+  STARTED: "Checked In",
+  COMPLETED: "Checked Out",
+  CANCELLED: "Cancelled",
+};
+
 export const PRODUCT_TYPES = {
   ROOM: "ROOM",
   ADDON: "ADDON",

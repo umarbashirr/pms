@@ -43,39 +43,6 @@ const gstDetailSchema = new mongoose.Schema(
   }
 );
 
-const paymentSchema = new mongoose.Schema(
-  {
-    payType: {
-      type: String,
-      enum: [
-        PAY_TYPES.CASH,
-        PAY_TYPES.CREDIT_CARD,
-        PAY_TYPES.AMEX,
-        PAY_TYPES.BANK_TRANSFER,
-        PAY_TYPES.CHEQUE,
-        PAY_TYPES.ONLINE,
-        PAY_TYPES.NET_BANKING,
-        PAY_TYPES.UPI,
-      ],
-    },
-    amount: {
-      type: Number,
-      default: 0,
-    },
-    isVoid: {
-      type: Boolean,
-      default: false,
-    },
-    transactionId: String,
-    remarks: String,
-    updatedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  },
-  { _id: false, timestamps: true }
-);
-
 const bookingSchema = new mongoose.Schema(
   {
     customer: {
@@ -123,7 +90,12 @@ const bookingSchema = new mongoose.Schema(
         BOOKING_SOURCE_TAGS.CHARTER,
       ],
     },
-    payments: [paymentSchema],
+    payments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Payment",
+      },
+    ],
     payType: {
       type: String,
       enum: [

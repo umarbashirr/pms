@@ -3,6 +3,7 @@ import verifyJWTToken from "@/helpers/verify-jwt-token";
 import BookingLicense from "@/models/booking-license.model";
 import Booking from "@/models/booking.model";
 import connectMongo from "@/utils/connect-mongo";
+import moment from "moment";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -45,8 +46,12 @@ export async function POST(req: NextRequest) {
     const licensePromises = products.map((product: any) => {
       // console.log(product);
       const bookingLicense = new BookingLicense({
-        checkInDate: product.checkInDate,
-        checkOutDate: product.checkOutDate,
+        checkInDate: moment(product.checkInDate, "MM/DD/YYYY")
+          .startOf("day")
+          .format(),
+        checkOutDate: moment(product.checkOutDate, "MM/DD/YYYY")
+          .startOf("day")
+          .format(),
         price: {
           baseAmount: product?.price?.baseAmount,
           taxAmount: product?.price?.taxAmount,
