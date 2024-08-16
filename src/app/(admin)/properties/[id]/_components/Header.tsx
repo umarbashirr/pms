@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import DynamicSheet from "@/components/ui/shared/dynamic-sheet";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "./Logo";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,12 @@ const Header = ({ propertyId }: { propertyId: string }) => {
   const openSidebar = () => {
     setIsOpen(true);
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  }, [pathname]);
 
   const routes = [
     {
@@ -37,6 +43,15 @@ const Header = ({ propertyId }: { propertyId: string }) => {
     {
       label: "Guest List",
       path: `/properties/${propertyId}/guest-list`,
+    },
+
+    {
+      label: "Create Individual",
+      path: `/properties/${propertyId}/profiles/create-individual`,
+    },
+    {
+      label: "Create Company",
+      path: `/properties/${propertyId}/profiles/create-company`,
     },
     {
       label: "Properties",

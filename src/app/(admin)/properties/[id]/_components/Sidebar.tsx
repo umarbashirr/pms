@@ -35,6 +35,14 @@ const Sidebar = ({ propertyId }: SidebarProps) => {
       path: `/properties/${propertyId}/guest-list`,
     },
     {
+      label: "Create Individual",
+      path: `/properties/${propertyId}/profiles/create-individual`,
+    },
+    {
+      label: "Create Company",
+      path: `/properties/${propertyId}/profiles/create-company`,
+    },
+    {
       label: "Properties",
       path: `/select-property`,
     },

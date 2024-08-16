@@ -76,6 +76,13 @@ const individualProfileSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Property",
     },
+    notes: {
+      type: String,
+    },
+    isSuspended: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
