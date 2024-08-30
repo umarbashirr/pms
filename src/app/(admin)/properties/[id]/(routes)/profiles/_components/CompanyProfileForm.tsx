@@ -19,19 +19,20 @@ const CompanyProfileFormSchema = z.object({
   companyCode: z.string().optional(),
   companyEmail: z.string().email(),
   companyPhone: z.string(),
+  profileType: z.string(),
   headOfficeAddress: z.object({
-    street: z.string().optional(),
+    locality: z.string().optional(),
     city: z.string().optional(),
     state: z.string().optional(),
     country: z.string().optional(),
-    zip: z.string().optional(),
+    zipCode: z.string().optional(),
   }),
   billingAddress: z.object({
-    street: z.string().optional(),
+    locality: z.string().optional(),
     city: z.string().optional(),
     state: z.string().optional(),
     country: z.string().optional(),
-    zip: z.string().optional(),
+    zipCode: z.string().optional(),
   }),
   gstDetails: z.object({
     beneficiaryName: z.string().optional(),
@@ -42,21 +43,7 @@ const CompanyProfileFormSchema = z.object({
     state: z.string().optional(),
     zipCode: z.string().optional(),
   }),
-  // verificationDetails: z.object({
-  //   regNumber: z.string().optional(),
-  //   regCert: z.string().optional(),
-  //   regDate: z.string().refine(
-  //     (value) => {
-  //       if (value === "") return true; // Allow blank string
-  //       const regex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19|20)\d\d$/;
-  //       return regex.test(value);
-  //     },
-  //     { message: "Invalid date" }
-  //   ),
-  //   regCountry: z.string().optional(),
-  // }),
-  // notes: z.string().optional(),
-  isSuspended: z.boolean().optional(),
+  propertyRef: z.string(),
 });
 
 const CompanyProfileForm = ({ propertyId }: { propertyId: string }) => {
@@ -68,19 +55,20 @@ const CompanyProfileForm = ({ propertyId }: { propertyId: string }) => {
       companyEmail: "",
       companyPhone: "",
       companyCode: "",
+      profileType: "COMPANY",
       headOfficeAddress: {
-        street: "",
+        locality: "",
         city: "",
         state: "",
         country: "",
-        zip: "",
+        zipCode: "",
       },
       billingAddress: {
-        street: "",
+        locality: "",
         city: "",
         state: "",
         country: "",
-        zip: "",
+        zipCode: "",
       },
       gstDetails: {
         beneficiaryName: "",
@@ -91,7 +79,7 @@ const CompanyProfileForm = ({ propertyId }: { propertyId: string }) => {
         state: "",
         zipCode: "",
       },
-      isSuspended: false,
+      propertyRef: propertyId,
     },
   });
 
@@ -100,7 +88,7 @@ const CompanyProfileForm = ({ propertyId }: { propertyId: string }) => {
 
     try {
       const response = await axiosInstance.post(
-        `/api/profiles/company-profiles?propertyId=${propertyId}`,
+        `/api/profiles/company/create?propertyId=${propertyId}`,
         values
       );
 
