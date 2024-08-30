@@ -1,11 +1,14 @@
 import verifyJWTToken from "@/helpers/verify-jwt-token";
 import CompanyProfile from "@/models/companyProfile.model";
+import { CompanyProfileFormSchema } from "@/schemas/company-profile.schema";
 import connectMongo from "@/utils/connect-mongo";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     await connectMongo();
+
+    const body = await req.json();
 
     const {
       companyName,
@@ -16,7 +19,7 @@ export async function POST(req: NextRequest) {
       billingAddress,
       headOfficeAddress,
       propertyRef,
-    } = await req.json();
+    } = CompanyProfileFormSchema.parse(body);
 
     const decodedUser = await verifyJWTToken(req);
 

@@ -6,6 +6,7 @@ import DateInput from "@/components/ui/shared/date-input";
 import LoadingButton from "@/components/ui/shared/loading-button";
 import SelectInput from "@/components/ui/shared/select-input";
 import TextInput from "@/components/ui/shared/TextInput";
+import { CompanyProfileFormSchema } from "@/schemas/company-profile.schema";
 import axiosInstance from "@/utils/axios-instance";
 import { countries } from "@/utils/countries";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,38 +14,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
-
-const CompanyProfileFormSchema = z.object({
-  companyName: z.string(),
-  companyCode: z.string().optional(),
-  companyEmail: z.string().email(),
-  companyPhone: z.string(),
-  profileType: z.string(),
-  headOfficeAddress: z.object({
-    locality: z.string().optional(),
-    city: z.string().optional(),
-    state: z.string().optional(),
-    country: z.string().optional(),
-    zipCode: z.string().optional(),
-  }),
-  billingAddress: z.object({
-    locality: z.string().optional(),
-    city: z.string().optional(),
-    state: z.string().optional(),
-    country: z.string().optional(),
-    zipCode: z.string().optional(),
-  }),
-  gstDetails: z.object({
-    beneficiaryName: z.string().optional(),
-    GSTIN: z.string().optional(),
-    addressLine1: z.string().optional(),
-    addressLine2: z.string().optional(),
-    city: z.string().optional(),
-    state: z.string().optional(),
-    zipCode: z.string().optional(),
-  }),
-  propertyRef: z.string(),
-});
 
 const CompanyProfileForm = ({ propertyId }: { propertyId: string }) => {
   const router = useRouter();
@@ -88,7 +57,7 @@ const CompanyProfileForm = ({ propertyId }: { propertyId: string }) => {
 
     try {
       const response = await axiosInstance.post(
-        `/api/profiles/company/create?propertyId=${propertyId}`,
+        `/api/profiles/company/create`,
         values
       );
 
