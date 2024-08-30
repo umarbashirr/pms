@@ -53,6 +53,7 @@ const RoomsPage = ({ params }: { params: { id: string } }) => {
           <Link
             href=""
             className="w-full h-full rounded-lg shadow-sm border p-6 min-h-60 bg-primary"
+            key={room?.code}
           >
             <div className="w-full h-full flex items-center justify-center text-4xl font-bold">
               {/* <p>{room?.categoryRef?.name}</p> */}

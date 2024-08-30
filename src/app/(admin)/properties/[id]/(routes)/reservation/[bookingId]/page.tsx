@@ -134,9 +134,9 @@ const ReservationPage = ({
               </tr>
             </thead>
             <tbody>
-              {bookingDetails?.bookingLicenses?.map((li: any) =>
+              {bookingDetails?.bookingLicenses?.map((li: any, index: number) =>
                 li?.product?.productType === PRODUCT_TYPES.ROOM ? (
-                  <tr>
+                  <tr key={index}>
                     <td className="border h-10 text-start px-6">
                       {li?.product?.roomCategoryRef?.name}
                     </td>
@@ -159,7 +159,10 @@ const ReservationPage = ({
                     </td>
                   </tr>
                 ) : (
-                  <tr className="h-20 text-sm text-muted-foreground text-center col-span-6">
+                  <tr
+                    className="h-20 text-sm text-muted-foreground text-center col-span-6"
+                    key={index}
+                  >
                     <td colSpan={6}>No rooms added!</td>
                   </tr>
                 )
@@ -182,10 +185,10 @@ const ReservationPage = ({
               </tr>
             </thead>
             <tbody>
-              {bookingDetails?.bookingLicenses?.map((li: any) =>
+              {bookingDetails?.bookingLicenses?.map((li: any, index: number) =>
                 li?.product?.productType === PRODUCT_TYPES.ADDON ||
                 li?.product?.productType === PRODUCT_TYPES.EXPENSE ? (
-                  <tr>
+                  <tr key={index}>
                     <td className="border h-10 text-start px-6">
                       {li?.product?.roomCategoryRef?.name}
                     </td>
@@ -208,7 +211,10 @@ const ReservationPage = ({
                     </td>
                   </tr>
                 ) : (
-                  <tr className="h-20 text-sm text-muted-foreground text-center col-span-6">
+                  <tr
+                    className="h-20 text-sm text-muted-foreground text-center col-span-6"
+                    key={index}
+                  >
                     <td colSpan={6}>Noting posted yet!</td>
                   </tr>
                 )
