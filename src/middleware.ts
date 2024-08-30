@@ -10,7 +10,10 @@ export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/properties") {
     return NextResponse.redirect(new URL("/select-property", request.url));
   }
-  if (request.nextUrl.pathname === "/auth") {
+  if (
+    request.nextUrl.pathname === "/auth" ||
+    request.nextUrl.pathname === "/login"
+  ) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
@@ -18,7 +21,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/select-property", request.url));
   }
 
-  if (!token && request.nextUrl.pathname.includes("/properties")) {
+  if (
+    !token &&
+    (request.nextUrl.pathname.includes("/properties") ||
+      request.nextUrl.pathname.includes("/select-property"))
+  ) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 }

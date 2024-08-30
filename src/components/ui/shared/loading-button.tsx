@@ -8,10 +8,17 @@ import { cn } from "@/lib/utils";
 interface LoadingButtonProps {
   className?: string;
   isLoading?: boolean;
-  onClick?: () => void;
+  onClick?: any;
   loadingText: string;
   children: ReactNode;
   type?: "submit" | "reset" | "button";
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
 }
 
 const LoadingButton = ({
@@ -21,6 +28,7 @@ const LoadingButton = ({
   loadingText,
   children,
   type = "button",
+  variant = "default",
 }: LoadingButtonProps) => {
   return (
     <Button
@@ -31,6 +39,7 @@ const LoadingButton = ({
       )}
       disabled={isLoading}
       onClick={onClick}
+      variant={variant}
     >
       {isLoading && (
         <ReloadIcon className="animate-spin repeat-infinite duration-500" />

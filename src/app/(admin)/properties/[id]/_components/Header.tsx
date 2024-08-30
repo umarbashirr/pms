@@ -3,15 +3,20 @@
 import { Button } from "@/components/ui/button";
 import DynamicSheet from "@/components/ui/shared/dynamic-sheet";
 import { Menu } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import axiosInstance from "@/utils/axios-instance";
+import toast from "react-hot-toast";
+import LoadingButton from "@/components/ui/shared/loading-button";
 
 const Header = ({ propertyId }: { propertyId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const openSidebar = () => {
     setIsOpen(true);
@@ -59,12 +64,44 @@ const Header = ({ propertyId }: { propertyId: string }) => {
     },
   ];
 
+  async function logoutHandler(e: any) {
+    e.preventDefault();
+    setIsLoggingOut(true);
+    try {
+      const res = await axiosInstance.post("/api/auth/logout");
+
+      const data = await res.data;
+
+      if (!data?.success) {
+        throw new Error(data);
+      }
+
+      router.replace("/auth/login");
+    } catch (error: any) {
+      console.error(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  }
+
   return (
     <>
-      <div>
+      <div className="flex items-center justify-between gap-4 w-full">
         <Button variant="ghost" size="icon" onClick={openSidebar}>
           <Menu />
         </Button>
+        <div className="flex items-center justify-end gap-4">
+          <Button variant="outline">Write your feedback</Button>
+          <LoadingButton
+            loadingText="Please wait..."
+            isLoading={isLoggingOut}
+            variant="destructive"
+            onClick={(e: any) => logoutHandler(e)}
+          >
+            Logout
+          </LoadingButton>
+        </div>
       </div>
       <DynamicSheet
         title=""
